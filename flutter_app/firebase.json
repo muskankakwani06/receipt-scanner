@@ -1,0 +1,38 @@
+{
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "receipt-scanner-plus",
+          "appId": "1:982047936447:android:9023e453f6fdf17e7f5b0a",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "receipt-scanner-plus",
+          "configurations": {
+            "android": "1:982047936447:android:9023e453f6fdf17e7f5b0a",
+            "ios": "1:982047936447:ios:006654398e9fa4217f5b0a",
+            "web": "1:982047936447:web:2cccfa9a8542cb2b7f5b0a",
+            "windows": "1:982047936447:web:48efb560efbf83657f5b0a"
+          }
+        }
+      }
+    }
+  }
+}

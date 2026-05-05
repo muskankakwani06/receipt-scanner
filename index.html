@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Receipt Scanner +</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icon.png" />
+  <meta name="theme-color" content="#050811" />
+</head>
+<body>
+<div class="device-mockup">
+
+<!-- STATUS BAR -->
+<div class="status-bar">
+  <span class="status-time" id="statusTime">9:41</span>
+  <div class="status-icons">
+    <svg width="17" height="12" viewBox="0 0 17 12" fill="white"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="1" width="3" height="11" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1"/></svg>
+    <svg width="16" height="12" viewBox="0 0 16 12" fill="white"><path d="M8 2.4C10.8 2.4 13.3 3.5 15.1 5.3L16 4.4C13.9 2.3 11.1 1 8 1C4.9 1 2.1 2.3 0 4.4L0.9 5.3C2.7 3.5 5.2 2.4 8 2.4Z"/><path d="M8 5.2C9.9 5.2 11.6 5.9 12.9 7.1L13.8 6.2C12.2 4.7 10.2 3.8 8 3.8C5.8 3.8 3.8 4.7 2.2 6.2L3.1 7.1C4.4 5.9 6.1 5.2 8 5.2Z"/><circle cx="8" cy="10" r="1.5"/></svg>
+    <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="white" stroke-opacity="0.35"/><rect x="1.5" y="1.5" width="17" height="9" rx="2.5" fill="white"/><path d="M23 4v4a2 2 0 0 0 0-4z" fill="white" fill-opacity="0.4"/></svg>
+  </div>
+</div>
+
+<!-- APP SHELL -->
+<div class="app-shell">
+
+  <!-- ===== SCREEN: HOME ===== -->
+  <div class="screen active" id="screen-home">
+    <div class="screen-header">
+      <div class="header-left">
+        <div class="avatar" id="avatarInitials">AJ</div>
+        <div>
+          <div class="greeting">Good morning 👋</div>
+          <div class="username" id="displayUserName">Alex Johnson</div>
+        </div>
+      </div>
+      <div class="header-right">
+        <button class="icon-btn" onclick="showNotifications()">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="notif-dot"></span>
+        </button>
+        <button class="icon-btn profile-trigger" onclick="switchTab('profile')">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="scroll-area">
+
+      <!-- Budget Card -->
+      <div class="budget-hero-card">
+        <div class="budget-hero-top">
+          <span class="budget-label">Monthly Budget</span>
+          <span class="budget-month" id="currentMonth">April 2026</span>
+        </div>
+        <div class="budget-amounts">
+          <div class="budget-spent">
+            <span class="spent-num" id="totalSpent">₹0</span>
+            <span class="spent-label">Spent</span>
+          </div>
+          <div class="budget-divider"></div>
+          <div class="budget-remaining">
+            <span class="remaining-num" id="totalRemaining">₹10,000</span>
+            <span class="remaining-label">Remaining</span>
+          </div>
+        </div>
+        <div class="budget-bar-wrap">
+          <div class="budget-bar-bg">
+            <div class="budget-bar-fill" id="budgetBarFill" style="width:0%"></div>
+          </div>
+          <span class="budget-pct" id="budgetPct">0% used</span>
+        </div>
+        <div class="budget-edit-row">
+          <button class="budget-edit-btn" onclick="openBudgetEdit()">✏️ Edit Budget</button>
+        </div>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="quick-stats">
+        <div class="stat-card">
+          <div class="stat-icon food">🍔</div>
+          <div class="stat-info">
+            <span class="stat-val" id="statFood">₹0</span>
+            <span class="stat-key">Food</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon transport">🚗</div>
+          <div class="stat-info">
+            <span class="stat-val" id="statTransport">₹0</span>
+            <span class="stat-key">Transport</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon shop">🛍️</div>
+          <div class="stat-info">
+            <span class="stat-val" id="statShopping">₹0</span>
+            <span class="stat-key">Shopping</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon other">📦</div>
+          <div class="stat-info">
+            <span class="stat-val" id="statOther">₹0</span>
+            <span class="stat-key">Other</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scan CTA -->
+      <div class="scan-cta-card" onclick="switchTab('scan')">
+        <div class="scan-cta-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        </div>
+        <div class="scan-cta-text">
+          <div class="scan-cta-title">Scan a Receipt</div>
+          <div class="scan-cta-sub">AI extracts & categorizes instantly</div>
+        </div>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4A90E2" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+
+      <!-- Recent Transactions -->
+      <div class="section-header">
+        <span class="section-title">Recent Transactions</span>
+        <button class="see-all-btn" onclick="switchTab('history')">See all</button>
+      </div>
+      <div id="recentList" class="transactions-list">
+        <div class="empty-state">
+          <div class="empty-icon">🧾</div>
+          <div class="empty-title">No receipts yet</div>
+          <div class="empty-sub">Scan your first receipt to get started</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== SCREEN: SCAN ===== -->
+  <div class="screen" id="screen-scan">
+    <div class="screen-header">
+      <div class="header-title">Scan Receipt</div>
+      <button class="icon-btn" onclick="openApiKeyModal()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+      </button>
+    </div>
+
+    <div class="scroll-area">
+
+      <div class="scan-upload-zone" id="uploadZone" onclick="triggerUpload()">
+        <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="handleFileSelect(event)" />
+        <div class="upload-inner" id="uploadInner">
+          <div class="upload-camera-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          </div>
+          <div class="upload-title">Tap to upload receipt</div>
+          <div class="upload-sub">JPG, PNG, HEIC supported</div>
+        </div>
+        <div id="previewContainer" class="preview-container" style="display:none">
+          <img id="receiptPreview" class="receipt-preview" alt="Receipt" />
+          <button class="change-photo-btn" onclick="event.stopPropagation(); triggerUpload()">Change Photo</button>
+        </div>
+      </div>
+
+      <!-- AI Key input -->
+      <div class="api-hint-card" id="apiHintCard">
+        <div class="api-hint-icon">🔑</div>
+        <div class="api-hint-text">
+          <div class="api-hint-title">Free Gemini AI Key Needed</div>
+          <div class="api-hint-sub">Get a free key at aistudio.google.com/apikey — or type <strong>demo</strong> to try it!</div>
+        </div>
+        <button class="api-hint-btn" onclick="openApiKeyModal()">Set Key</button>
+      </div>
+
+      <div id="analyzeSection" style="display:none">
+        <div class="currency-row">
+          <div class="currency-label">Currency</div>
+          <select class="currency-select" id="currencySelect">
+            <option value="₹">₹ INR</option>
+            <option value="$">$ USD</option>
+            <option value="€">€ EUR</option>
+            <option value="£">£ GBP</option>
+          </select>
+        </div>
+        <button class="analyze-btn" id="analyzeBtn" onclick="analyzeReceipt()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Analyze with AI
+        </button>
+      </div>
+
+      <!-- Loading -->
+      <div id="loadingSection" class="loading-section" style="display:none">
+        <div class="loading-orb"></div>
+        <div class="loading-title">AI is reading your receipt...</div>
+        <div class="loading-sub">Extracting items & categorizing</div>
+        <div class="loading-steps">
+          <div class="loading-step active" id="step1">📷 Processing image</div>
+          <div class="loading-step" id="step2">🔍 Extracting items</div>
+          <div class="loading-step" id="step3">🏷️ Categorizing</div>
+          <div class="loading-step" id="step4">💾 Saving to budget</div>
+        </div>
+      </div>
+
+      <!-- Results -->
+      <div id="resultsSection" style="display:none">
+        <div class="results-header-card">
+          <div class="results-merchant" id="resultMerchant">—</div>
+          <div class="results-date" id="resultDate">—</div>
+          <div class="results-total-wrap">
+            <span class="results-total-label">Total</span>
+            <span class="results-total-val" id="resultTotal">—</span>
+          </div>
+        </div>
+
+        <div class="section-header" style="margin-top:20px">
+          <span class="section-title">Extracted Items</span>
+          <span class="items-count" id="itemsCount"></span>
+        </div>
+        <div id="itemsList" class="items-list"></div>
+
+        <div class="section-header" style="margin-top:20px">
+          <span class="section-title">Category Breakdown</span>
+        </div>
+        <div id="categoryBreakdown" class="category-breakdown"></div>
+
+        <div class="results-actions">
+          <button class="action-btn secondary" onclick="resetScan()">Scan Another</button>
+          <button class="action-btn primary" onclick="saveTobudget()">Save to Budget ✓</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== SCREEN: HISTORY ===== -->
+  <div class="screen" id="screen-history">
+    <div class="screen-header">
+      <div class="header-title">History</div>
+      <button class="icon-btn danger" onclick="clearHistory()" title="Clear all">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+      </button>
+    </div>
+    <div class="scroll-area">
+      <div id="historyList" class="transactions-list">
+        <div class="empty-state">
+          <div class="empty-icon">📋</div>
+          <div class="empty-title">No history yet</div>
+          <div class="empty-sub">Scanned receipts will appear here</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN: INSIGHTS ===== -->
+  <div class="screen" id="screen-insights">
+    <div class="screen-header">
+      <div class="header-title">Insights</div>
+    </div>
+    <div class="scroll-area">
+      <div class="insights-summary-card">
+        <div class="insights-label">Total Tracked</div>
+        <div class="insights-big" id="insightTotal">₹0</div>
+        <div class="insights-sub" id="insightReceiptCount">0 receipts scanned</div>
+      </div>
+
+      <div class="section-header"><span class="section-title">Spending by Category</span></div>
+      <div id="insightCats" class="insight-cats"></div>
+
+      <div class="section-header" style="margin-top:24px"><span class="section-title">Top Merchants</span></div>
+      <div id="insightMerchants" class="insight-merchants"></div>
+
+      <div class="insights-tip-card">
+        <div class="tip-icon">💡</div>
+        <div class="tip-text">Scan all your receipts for accurate monthly insights and personalized saving tips.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN: PROFILE ===== -->
+  <div class="screen" id="screen-profile">
+    <div class="screen-header">
+      <div class="header-title">Profile</div>
+    </div>
+    <div class="scroll-area">
+      <div class="profile-card">
+        <div class="profile-avatar-large">AJ</div>
+        <div class="profile-info">
+          <div class="profile-name" id="profileName">Alex Johnson</div>
+          <div class="profile-email">alex.j@example.com</div>
+        </div>
+        <button class="edit-profile-btn" onclick="openProfileEdit()">Edit Profile</button>
+      </div>
+
+      <div class="section-header" style="margin-top:24px"><span class="section-title">App Settings</span></div>
+      <div class="settings-group">
+        <div class="settings-item" onclick="openBudgetEdit()">
+          <div class="settings-icon">💰</div>
+          <div class="settings-label">Monthly Budget</div>
+          <div class="settings-value" id="profileBudgetVal">₹10,000</div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div class="settings-item" onclick="openApiKeyModal()">
+          <div class="settings-icon">🔑</div>
+          <div class="settings-label">Gemini API Key</div>
+          <div class="settings-value" id="profileApiKeyStatus">Set</div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div class="settings-item">
+          <div class="settings-icon">🌍</div>
+          <div class="settings-label">Currency</div>
+          <div class="settings-value">INR (₹)</div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+
+      <div class="section-header" style="margin-top:24px"><span class="section-title">Support</span></div>
+      <div class="settings-group">
+        <div class="settings-item">
+          <div class="settings-icon">💬</div>
+          <div class="settings-label">Help Center</div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div class="settings-item">
+          <div class="settings-icon">📄</div>
+          <div class="settings-label">Privacy Policy</div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+
+      <button class="logout-btn" onclick="showToast('Logout coming soon!')">Log Out</button>
+      <div class="version-tag">Receipt Scanner + v1.2.0</div>
+    </div>
+  </div>
+
+  <!-- TAB BAR -->
+  <nav class="tab-bar">
+    <button class="tab-btn active" id="tab-home" onclick="switchTab('home')">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>Home</span>
+    </button>
+    <button class="tab-btn" id="tab-scan" onclick="switchTab('scan')">
+      <div class="scan-fab">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+      </div>
+      <span>Scan</span>
+    </button>
+    <button class="tab-btn" id="tab-history" onclick="switchTab('history')">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      <span>History</span>
+    </button>
+    <button class="tab-btn" id="tab-insights" onclick="switchTab('insights')">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      <span>Insights</span>
+    </button>
+    <button class="tab-btn" id="tab-profile" onclick="switchTab('profile')">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>Profile</span>
+    </button>
+  </nav>
+
+</div><!-- end app-shell -->
+
+<!-- MODAL: API KEY -->
+<div class="modal-overlay" id="apiKeyModal" style="display:none" onclick="closeApiKeyModal(event)">
+  <div class="modal-card">
+    <div class="modal-handle"></div>
+    <div class="modal-title">🔑 Gemini API Key</div>
+    <div class="modal-sub">Get a <strong>free</strong> API key from Google AI Studio — no credit card needed!</div>
+    <div style="background:rgba(59,130,246,0.12);border:1px solid rgba(59,130,246,0.3);border-radius:12px;padding:12px 14px;margin:10px 0 14px;font-size:13px;line-height:1.6;color:#93C5FD;">
+      <div style="font-weight:600;margin-bottom:6px;color:#60A5FA;">How to get your free key:</div>
+      <div>1️⃣ Visit <a href="https://aistudio.google.com/apikey" target="_blank" style="color:#93C5FD;font-weight:600;">aistudio.google.com/apikey</a></div>
+      <div>2️⃣ Sign in with your Google account</div>
+      <div>3️⃣ Click <strong>"Create API Key"</strong></div>
+      <div>4️⃣ Copy and paste it below ✅</div>
+    </div>
+    <input type="password" class="modal-input" id="apiKeyInput" placeholder="AIzaSy..." />
+    <div style="font-size:11px;color:#64748B;text-align:center;margin-top:6px;">🔒 Stored locally on your device only</div>
+    <div style="font-size:11px;color:#64748B;text-align:center;margin-bottom:4px;">💡 Tip: type <strong>demo</strong> to try without a key</div>
+    <div class="modal-actions">
+      <button class="modal-btn secondary" onclick="closeApiKeyModal()">Cancel</button>
+      <button class="modal-btn primary" onclick="saveApiKey()">Save Key</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: BUDGET EDIT -->
+<div class="modal-overlay" id="budgetModal" style="display:none" onclick="closeBudgetModal(event)">
+  <div class="modal-card">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Set Monthly Budget</div>
+    <div class="modal-sub">Enter your total monthly budget limit</div>
+    <div class="modal-input-wrap">
+      <span class="modal-currency" id="modalCurrency">₹</span>
+      <input type="number" class="modal-input with-prefix" id="budgetInput" placeholder="10000" />
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn secondary" onclick="closeBudgetModal()">Cancel</button>
+      <button class="modal-btn primary" onclick="saveBudget()">Save Budget</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: PROFILE EDIT -->
+<div class="modal-overlay" id="profileModal" style="display:none" onclick="closeProfileModal(event)">
+  <div class="modal-card">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Edit Profile</div>
+    <div class="modal-sub">Update your personal details</div>
+    <div class="modal-input-wrap" style="margin-bottom:12px">
+      <input type="text" class="modal-input" id="profileNameInput" placeholder="Name" />
+    </div>
+    <div class="modal-input-wrap">
+      <input type="email" class="modal-input" id="profileEmailInput" placeholder="Email" />
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn secondary" onclick="closeProfileModal()">Cancel</button>
+      <button class="modal-btn primary" onclick="saveProfile()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+</div> <!-- END DEVICE MOCKUP -->
+
+<script src="app.js"></script>
+</body>
+</html>
