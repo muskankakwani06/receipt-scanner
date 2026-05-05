@@ -1,118 +1,61 @@
-# 🧾 Receipt Scanner +
+<div align="center">
 
-> AI-powered receipt scanning and budget tracking app — Web PWA + Flutter mobile app
+<img src="icon.png" width="100" height="100" style="border-radius:20px"/>
 
-**🔗 Live Demo:** [https://receipt-scanner-plus.web.app](https://receipt-scanner-plus.web.app)
+# Receipt Scanner +
 
----
+**AI-powered receipt scanning & personal budget tracker**
 
-## ✨ Features
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-receipt--scanner--plus.web.app-blue?style=for-the-badge&logo=firebase)](https://receipt-scanner-plus.web.app)
+[![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?style=for-the-badge&logo=flutter)](https://flutter.dev)
+[![Firebase](https://img.shields.io/badge/Firebase-Powered-FFCA28?style=for-the-badge&logo=firebase)](https://firebase.google.com)
 
-- 📸 **AI Receipt Scanning** — Powered by Google Gemini 2.5 Flash
-- 💰 **Budget Tracking** — Set monthly budgets, track spending in real-time
-- 📊 **Insights & Analytics** — Category breakdowns, top merchants, spending trends
-- 📋 **History** — View all scanned receipts grouped by date
-- 🌐 **Web PWA** — Installable on any device from the browser
-- 📱 **Flutter App** — Native mobile experience for Android & iOS
-- 🔥 **Firebase Backend** — Auth, Firestore, Storage
+</div>
 
 ---
 
-## 🚀 Getting Started
+## Overview
 
-### Web App
-
-Just open `index.html` in a browser, or visit the [live demo](https://receipt-scanner-plus.web.app).
-
-You'll need a **Google Gemini API key** — enter it in the app's Profile tab. Get one free at [aistudio.google.com](https://aistudio.google.com).
+Receipt Scanner + is a full-stack AI application that turns photos of receipts into structured financial data. It automatically categorizes every line item, tracks your monthly spending, and gives you a clear picture of where your money goes — all in a premium, mobile-first interface.
 
 ---
 
-### Flutter App
+## Features
 
-#### Prerequisites
-
-- Flutter SDK (latest stable)
-- Firebase CLI: `npm install -g firebase-tools`
-- FlutterFire CLI: `dart pub global activate flutterfire_cli`
-
-#### Setup
-
-```bash
-cd flutter_app
-flutter pub get
-```
-
-#### Configure Firebase (Required)
-
-This repo does **not** include `firebase_options.dart` or `google-services.json` for security reasons.
-
-You need to connect your own Firebase project:
-
-1. Create a project at [console.firebase.google.com](https://console.firebase.google.com)
-2. Enable **Authentication**, **Firestore**, and **Storage**
-3. Run:
-
-```bash
-flutterfire configure
-```
-
-This auto-generates `lib/firebase_options.dart` and downloads `google-services.json` for Android.
-
-#### Run the app
-
-```bash
-flutter run
-```
+- **AI Receipt Scanning** — Upload a receipt photo and Gemini AI extracts every item, price, merchant, and date instantly
+- **Smart Categorization** — Items are automatically tagged: Food & Dining, Transport, Shopping, Health, Entertainment, Utilities
+- **Budget Tracking** — Set a monthly budget and watch your spending update in real time
+- **Spending Insights** — Visual breakdowns by category and top merchants across all time
+- **Full History** — Every scanned receipt saved, grouped by date, searchable at any time
+- **Multi-currency** — Switch between ₹, $, €, £ and more
+- **PWA Support** — Install directly from the browser, works offline
+- **Flutter Mobile App** — Native Android & iOS experience with Firebase sync
 
 ---
 
-## 🗂 Project Structure
+## Tech Stack
 
-```
-receipt-budget-app-updated/
-├── index.html          # Web PWA entry point
-├── app.js              # Web app logic
-├── style.css           # Web app styles
-├── manifest.json       # PWA manifest
-├── sw.js               # Service worker
-├── proxy.js            # API proxy helper
-├── icon.png            # App icon
-└── flutter_app/        # Flutter mobile app
-    ├── lib/
-    │   ├── main.dart
-    │   ├── models/
-    │   ├── screens/
-    │   ├── services/   # Gemini, Firebase, Auth, DB
-    │   ├── providers/
-    │   └── theme/
-    ├── assets/
-    ├── android/
-    ├── ios/
-    └── pubspec.yaml
-```
+| Layer | Technology |
+|---|---|
+| Web Frontend | HTML5, CSS3, Vanilla JavaScript |
+| Mobile App | Flutter / Dart |
+| AI Engine | Google Gemini 2.5 Flash |
+| Auth & Database | Firebase Auth + Firestore |
+| File Storage | Firebase Storage |
+| Hosting | Firebase Hosting |
 
 ---
 
-## 🔐 Environment & Secrets
+## Demo
 
-| File | Status | Notes |
-|---|---|---|
-| `firebase_options.dart` | ❌ Not in repo | Run `flutterfire configure` |
-| `google-services.json` | ❌ Not in repo | Downloaded via FlutterFire CLI |
-| Gemini API Key | ✅ User-provided | Entered in app at runtime |
+🔗 **[https://receipt-scanner-plus.web.app](https://receipt-scanner-plus.web.app)**
+
+> Try it instantly — use `demo` as your API key to see a sample receipt analyzed without needing a real key.
 
 ---
 
-## 🛠 Tech Stack
+<div align="center">
 
-- **Web:** Vanilla HTML/CSS/JS, Google Gemini API, Service Worker (PWA)
-- **Mobile:** Flutter/Dart
-- **Backend:** Firebase (Auth, Firestore, Storage)
-- **AI:** Google Gemini 2.5 Flash
+Made with ❤️ by [Muskan Kakwani](https://github.com/muskankakwani06)
 
----
-
-## 📄 License
-
-MIT License — feel free to use and modify.
+</div>
