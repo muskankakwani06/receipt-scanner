@@ -1,14 +1,11 @@
 <div align="center">
 
-<img src="icon.png" width="100" height="100" style="border-radius:20px"/>
 
 # Receipt Scanner +
 
 **AI-powered receipt scanning & personal budget tracker**
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-receipt--scanner--plus.web.app-blue?style=for-the-badge&logo=firebase)](https://receipt-scanner-plus.web.app)
-[![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?style=for-the-badge&logo=flutter)](https://flutter.dev)
-[![Firebase](https://img.shields.io/badge/Firebase-Powered-FFCA28?style=for-the-badge&logo=firebase)](https://firebase.google.com)
 
 </div>
 
